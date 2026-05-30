@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms & Conditions — Dingbro Ltd',
+  title: 'Terms & Conditions',
   description: 'Dingbro Ltd terms and conditions covering ordering, delivery, returns, privacy and conditions of use.',
 }
 

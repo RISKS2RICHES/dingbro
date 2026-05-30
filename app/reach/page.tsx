@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'REACH Compliance — Dingbro Ltd',
+  title: 'REACH',
   description:
     'Dingbro Ltd statement on REACH — Registration, Evaluation, Authorisation and Restriction of Chemicals. Contact our REACH representative Robert Parfitt.',
 }

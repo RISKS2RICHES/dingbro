@@ -24,8 +24,8 @@ export const metadata: Metadata = {
       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3500')
   ),
   title: {
-    default: "Dingbro Ltd — Scotland's Largest Independent Motor Factor",
-    template: '%s | Dingbro Ltd',
+    default: 'Dingbro Ltd | Official Website',
+    template: 'Dingbro Ltd | %s',
   },
   description:
     "Since 1973, Dingbro has been Scotland's leading wholesale distributor of motor vehicle components, bodyshop supplies, and truck & trailer parts. 29 sites. 1,500+ employees. Trade only.",

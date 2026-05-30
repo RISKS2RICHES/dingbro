@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'About Dingbro',
+  title: 'About',
   description: "Founded in Fraserburgh in 1973 by the Dingwall Brothers, Dingbro has grown to become Scotland's largest independent motor factor with 29 sites and over 1,500 employees.",
 }
 
