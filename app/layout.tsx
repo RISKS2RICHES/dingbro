@@ -19,6 +19,10 @@ const barlowCondensed = Barlow_Condensed({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3500')
+  ),
   title: {
     default: "Dingbro Ltd — Scotland's Largest Independent Motor Factor",
     template: '%s | Dingbro Ltd',
