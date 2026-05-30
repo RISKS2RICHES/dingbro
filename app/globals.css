@@ -1,26 +1,227 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Safety-net font fallbacks — next/font normally overrides these on <html>,
+     but on iOS Safari over a slow/dev connection the variable can be undefined
+     during first paint, which renders text invisible. */
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-barlow: 'Barlow Condensed', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --db-blue: #1c3c8e;
+  --db-blue-dark: #102659;
+  --db-blue-mid: #1c3c8e;
+  --db-blue-soft: #2A4FA3;
+  --db-blue-pale: #EEF2FB;
+  --db-blue-line: #D6DEEF;
+  --db-ink: #0A0F1C;
+  --db-text: #1A1D23;
+  --db-mid: #4B5563;
+  --db-muted: #8A93A6;
+  --db-light: #F5F7FB;
+  --db-white: #FFFFFF;
+  --db-border: #E2E6EF;
+  --db-border-dark: #C8CEDB;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-db-blue: var(--db-blue);
+  --color-db-blue-dark: var(--db-blue-dark);
+  --color-db-blue-mid: var(--db-blue-mid);
+  --color-db-blue-pale: var(--db-blue-pale);
+  --color-db-ink: var(--db-ink);
+  --color-db-text: var(--db-text);
+  --color-db-mid: var(--db-mid);
+  --color-db-light: var(--db-light);
+  --color-db-white: var(--db-white);
+  --color-db-border: var(--db-border);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: #F2F4F8; }
+
+/* Light grey page surface — replaces white section backgrounds site-wide */
+.bg-white { background-color: #F2F4F8 !important; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #F2F4F8;
+  color: #1A1D23;
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Subpage hero — kept minimal so Safari renders inline content reliably */
+.subpage-hero { position: relative; }
+
+/* Nav */
+.nav-link { color: #1A1D23; transition: color 0.15s; text-decoration: none; }
+.nav-link:hover { color: #1c3c8e; }
+.nav-link.active { color: #1c3c8e; font-weight: 600; }
+.nav-link.active::after { content: ''; display: block; height: 2px; margin-top: 4px; background: #1c3c8e; }
+
+/* Buttons — unified blue palette */
+.btn-blue { background: #1c3c8e; color: white; transition: background 0.18s; }
+.btn-blue:hover { background: #102659; }
+.btn-blue-dark { background: #102659; color: white; transition: background 0.18s; }
+.btn-blue-dark:hover { background: #1c3c8e; }
+.btn-outline-white { border: 1.5px solid rgba(255,255,255,0.45); color: white; background: transparent; transition: all 0.18s; }
+.btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: white; }
+.btn-outline-blue { border: 1.5px solid #1c3c8e; color: #1c3c8e; background: transparent; transition: all 0.18s; }
+.btn-outline-blue:hover { background: #1c3c8e; color: white; }
+.btn-outline-dark { border: 1px solid #E2E6EF; color: #0A0F1C; background: white; transition: all 0.18s; }
+.btn-outline-dark:hover { border-color: #1c3c8e; color: #1c3c8e; }
+
+/* Cards */
+.branch-card:hover { border-left-color: #1c3c8e; }
+.service-card {
+  position: relative;
+  transition: box-shadow 0.3s cubic-bezier(.22,.61,.36,1), transform 0.3s cubic-bezier(.22,.61,.36,1), border-color 0.3s;
+}
+.service-card:hover {
+  box-shadow: 0 18px 48px -16px rgba(11, 36, 89, 0.18), 0 2px 4px rgba(11, 36, 89, 0.04);
+  transform: translateY(-3px);
+  border-color: #C8CEDB !important;
+}
+
+/* Refined buttons */
+.btn-blue { box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 6px 18px -8px rgba(28, 60, 142, 0.45); }
+.btn-blue:hover { box-shadow: 0 1px 0 rgba(255,255,255,0.1) inset, 0 10px 24px -8px rgba(16, 38, 89, 0.6); }
+.btn-outline-dark { box-shadow: 0 1px 0 rgba(0,0,0,0.02) inset; }
+
+/* Refined eyebrow accent line */
+.eyebrow-accent { height: 1px; width: 32px; background: linear-gradient(90deg, #1c3c8e, rgba(28,60,142,0.2)); }
+
+/* Footer */
+.footer-link { color: rgba(255,255,255,0.55); transition: color 0.15s; text-decoration: none; }
+.footer-link:hover { color: white; }
+
+/* Mapbox */
+.mapboxgl-popup-content {
+  background: #1c3c8e !important;
+  color: white !important;
+  border-radius: 2px !important;
+  border-top: 3px solid #1c3c8e !important;
+  padding: 16px !important;
+  font-family: var(--font-inter), 'Inter', sans-serif !important;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip { border-top-color: #1c3c8e !important; }
+.mapboxgl-popup-close-button { color: rgba(255,255,255,0.6) !important; font-size: 18px !important; padding: 4px 8px !important; }
+.mapboxgl-ctrl-logo { display: none !important; }
+
+/* Mobile: light grey header, blue banner with white text */
+@media (max-width: 767px) {
+  .site-nav { background: #F4F6FA !important; border-bottom-color: #E2E6EF !important; }
+  .site-nav .mobile-menu-toggle { color: #1c3c8e !important; }
+  .announcement-bar {
+    background: #1c3c8e !important;
+    color: #FFFFFF !important;
+    border-bottom-color: rgba(255,255,255,0.12) !important;
+  }
+  .announcement-bar .announcement-marquee { animation-duration: 30s !important; }
+}
+
+/* REACH page anchor links */
+.reach-link { color: #1c3c8e; text-decoration: underline; text-underline-offset: 3px; transition: color 0.15s; }
+.reach-link:hover { color: #102659; }
+
+/* ── Announcement bar marquee ── */
+:root { --announcement-h: 32px; }
+.announcement-bar { overflow: hidden; }
+.announcement-marquee {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  align-items: center;
+  width: max-content;
+  animation: announcement-scroll 45s linear infinite;
+}
+.announcement-row { display: flex; flex: 0 0 auto; align-items: center; height: 100%; min-width: 100vw; justify-content: space-around; }
+.announcement-item { display: inline-flex; align-items: center; padding: 0 24px; }
+.announcement-sep { margin-left: 24px; opacity: 0.35; }
+.announcement-link { color: inherit; text-decoration: none; transition: opacity 0.15s; }
+.announcement-link:hover { opacity: 1; text-decoration: underline; }
+@keyframes announcement-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Marquee ── */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 36px;
+  padding-right: 36px;
+  align-items: center;
+  width: max-content;
+  animation: marquee-x var(--marquee-duration, 50s) linear infinite;
+}
+.marquee--reverse .marquee__track { animation-direction: reverse; }
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  height: 64px;
+  white-space: nowrap;
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.logo-chip:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+@media (max-width: 767px) {
+  .logo-chip { height: 52px; padding: 0 10px; transform: scale(0.88); transform-origin: center; }
+}
+@media (min-width: 768px) {
+  .marquee__track { padding-right: 8px; }
+}
+
+/* ── Stats section responsive ── */
+.stats-mobile { display: block; }
+.stats-desktop { display: none; }
+@media (min-width: 640px) {
+  .stats-mobile { display: none !important; }
+  .stats-desktop { display: grid !important; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+}
+@media (min-width: 1024px) {
+  .stats-desktop { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ── Reveal (no-op styles; component is a passthrough) ── */
+.reveal { opacity: 1; }
+
+/* Bento */
+.bento-tile {
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border: 1px solid #E2E6EF;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.bento-tile:hover {
+  border-color: #1c3c8e;
+  box-shadow: 0 12px 40px rgba(11,44,107,0.10);
+}
+.bento-tile--dark {
+  background: linear-gradient(140deg, #102659 0%, #1c3c8e 100%);
+  color: white;
+  border-color: #102659;
+}
+.bento-tile--dark:hover { box-shadow: 0 12px 40px rgba(11,44,107,0.35); }
